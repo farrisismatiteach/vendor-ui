@@ -23,7 +23,8 @@ jobs:
       - name: Configure AWS credentials from AWS account
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE }}
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
+          role-session-name: ${{ secrets.AWS_OIDC_ROLE_SESSION_NAME }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       # - name: Login to Amazon ECR
