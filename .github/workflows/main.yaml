@@ -62,11 +62,11 @@ jobs:
         working-directory: ./terraform
         env:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
-          AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY }}
+          AWS_BUCKET_KEY: ${{ secrets.AWS_BUCKET_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: > 
           terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" 
-          -backend-config="key=${AWS_BUCKET_KEY_NAME}" 
+          -backend-config="key=${AWS_BUCKET_KEY}" 
           -backend-config="region=${AWS_REGION}"
 
       - name: Terraform Validate
