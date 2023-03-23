@@ -6,9 +6,9 @@ on:
       - main
   pull_request:
 permissions:
-      id-token: write # This is required for aws oidc connections (Try 4)
-      contents: read # This is required for actions/checkout
-      pull-requests: write # This is required for gh bot to comment PR
+      id-token: write
+      contents: read
+      pull-requests: write 
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -28,25 +28,22 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       # - name: Login to Amazon ECR
-      #   id: login-ecr
+      #   id: login-ecr 
       #   uses: aws-actions/amazon-ecr-login@v1
 
-      # - name: Build ui registry
+      # - name: Build repository
       #   uses: int128/create-ecr-repository-action@v1
       #   id: ecr
       #   with:
-      #     repository: vendors_ui_container
+      #     repository: ui
 
-      # - name: Build, tag, and push image to Amazon ECR
+      # - name: Build, tag, and push image to ECR
       #   id: build-image
       #   env:
-      #     AWS_ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
       #     AWS_IMAGE_TAG: ${{ github.sha }}
-      #     AWS_ECR_URI: ${{ steps.ecr.outputs.repository-uri }}
       #   run: |
       #     docker build -t ${{ steps.ecr.outputs.repository-uri }}:$AWS_IMAGE_TAG .
       #     docker push ${{ steps.ecr.outputs.repository-uri }}:$AWS_IMAGE_TAG
-      #     echo "::set-output name=image::${{ steps.ecr.outputs.repository-uri }}:$AWS_IMAGE_TAG"
 
       - name: Setup Terraform 
         uses: hashicorp/setup-terraform@v2
@@ -65,13 +62,13 @@ jobs:
         working-directory: ./terraform
         env:
           AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
-          AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_BUCKET_KEY }}
+          AWS_BUCKET_KEY: ${{ secrets.AWS_BUCKET_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: > 
           terraform init -backend-config="bucket=${AWS_BUCKET_NAME}" 
-          -backend-config="key=${AWS_BUCKET_KEY_NAME}" 
+          -backend-config="key=${AWS_BUCKET_KEY}" 
           -backend-config="region=${AWS_REGION}"
 
-      # Code copied form https://github.com/marketplace/actions/hashicorp-setup-terraform
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -97,7 +94,6 @@ jobs:
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
             #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
             <details><summary>Validation Output</summary>
-
             \`\`\`\n
             ${{ steps.validate.outputs.stdout }}
             \`\`\`
@@ -132,11 +128,11 @@ jobs:
       - name: Terraform Apply
         id: apply
         working-directory: ./terraform
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
         env:
-          TF_VAR_image_tag: ${{ github.sha }}
-          TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
-          TF_VAR_repo: https://github.com/FarrisIsmati/udemy-vendor-ui
+          TF_VAR_IMAGE_TAG: ${{ github.sha }}
+          TF_VAR_AWS_REGION: ${{ secrets.AWS_REGION }}
+          TF_VAR_REPO: https://github.com/farrisismatiteach/vendor-ui
           TF_VAR_PAT: ${{ secrets.PAT }}
           TF_VAR_GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
