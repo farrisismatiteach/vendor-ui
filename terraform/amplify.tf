@@ -45,6 +45,12 @@ resource "aws_amplify_branch" "main" {
   app_id = aws_amplify_app.amplify_ui.id
   branch_name = "main"
   stage = "DEVELOPMENT"
+
+  environment_variables = {
+    NEXT_PUBLIC_VENDORS_WEBSOCKET_URL=var.VENDORS_WEBSOCKET_URL
+    NEXT_PUBLIC_VENDORS_API_URL=var.VENDORS_API_URL
+    NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=var.GOOGLE_MAPS_API_KEY
+  }
 }
 
 resource "aws_amplify_webhook" "main" {
