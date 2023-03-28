@@ -5,6 +5,7 @@ import Tile from "./tile";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "./loader";
 import { getVendors } from "@/api/vendors";
+import { vendorsSort } from "@/helpers/utils";
 
 interface DashboardProps {
     vendors: Vendors;
@@ -15,12 +16,6 @@ const DashboardStyled = styled.div`
     width: 400px;
     overflow: auto;
 `;
-
-export const vendorsSort = (vendors: Vendor[]) => vendors.sort((a,b) => {
-    const a_date: number = a.tweets.length && new Date(a.tweets[0].date).getTime();
-    const b_date: number = b.tweets.length && new Date(b.tweets[0].date).getTime();
-    return b_date - a_date;
-})
 
 export default function Dashboard({vendors, setVendors}: DashboardProps) {
     const next = async () => {

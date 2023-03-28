@@ -1,9 +1,10 @@
 import { Tweet, Vendors } from '@/api/types';
 import Map from '../map/index';
 import { useEffect, useState } from 'react';
-import Dashboard, { vendorsSort } from '../dashboard';
+import Dashboard from '../dashboard';
 import styled from 'styled-components';
 import { websocket } from '@/api/websocket';
+import { vendorsSort } from '@/helpers/utils';
 
 interface MainProps {
     initVendors: Vendors;
