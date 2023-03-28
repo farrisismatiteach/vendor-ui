@@ -29,7 +29,7 @@ resource "aws_amplify_app" "amplify_ui" {
     platform = "WEB"
 
     auto_branch_creation_config {
-      enable_pull_request_review = true
+      enable_pull_request_preview = true
     }
 
     iam_service_role_arn = aws_iam_role.ampilfy_role.arn
