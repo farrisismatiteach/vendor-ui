@@ -1,7 +1,7 @@
 variable "AWS_REGION" {}
 variable "PAT" {}
 variable "REPO" {}
-variable "GOGOLE_MAPS_API_KEY" {}
+variable "GOOGLE_MAPS_API_KEY" {}
 
 variable "VENDORS_WEBSOCKET_URL" {
     default = "wss://i71tdgmo7c.execute-api.us-east-1.amazonaws.com/primary"
