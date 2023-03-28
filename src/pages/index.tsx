@@ -1,7 +1,7 @@
-import { Vendors } from "@/api/types";
-import { getVendors } from "@/api/vendors";
-import { vendorsSort } from "@/components/dashboard";
-import Main from "@/components/main";
+import { Vendors } from "../api/types";
+import { getVendors } from "../api/vendors";
+import { vendorsSort } from "../components/dashboard";
+import Main from "../components/main";
 
 interface HomeProps {
   initVendors: Vendors;
