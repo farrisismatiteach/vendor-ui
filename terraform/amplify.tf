@@ -52,7 +52,7 @@ resource "aws_amplify_branch" "main" {
     NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=var.GOOGLE_MAPS_API_KEY
   }
 }
-
+# 
 resource "aws_amplify_webhook" "main" {
   app_id = aws_amplify_app.amplify_ui.id
   branch_name = aws_amplify_branch.main.branch_name
