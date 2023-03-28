@@ -29,6 +29,7 @@ export async function getStaticProps() {
     vendors.Items = vendorsSort(vendors.Items);
   } catch(e) {
     if (e instanceof Error) {
+      // Return empty vendors
       vendors = { Items: [], count: 0, lastEvaluatedKey: null }
     } else {
       throw new Error('getVendors unexepected Error');
