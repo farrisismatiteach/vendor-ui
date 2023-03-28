@@ -7,20 +7,20 @@ resource "aws_amplify_app" "amplify_ui" {
     build_spec = <<-EOT
         version: 1
         frontend:
-        phases:
-            preBuild:
-              commands:
-                  - yarn install
-            build:
-              commands:
-                  - yarn run build
-        artifacts:
-            baseDirectory: .next
-            files:
-              - '**/*'
-        cache:
-            paths:
-              - node_modules/**/*
+          phases:
+              preBuild:
+                commands:
+                    - yarn install
+              build:
+                commands:
+                    - yarn run build
+          artifacts:
+              baseDirectory: .next
+              files:
+                - '**/*'
+          cache:
+              paths:
+                - node_modules/**/*
     EOT
 
     enable_auto_branch_creation = true
