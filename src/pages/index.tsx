@@ -2,6 +2,7 @@ import { Vendors } from "@/api/types";
 import { getVendors } from "@/api/vendors";
 import Main from "@/components/main";
 import { vendorsSort } from "@/helpers/utils";
+import Head from "next/head";
 
 interface HomeProps {
   initVendors: Vendors;
@@ -9,7 +10,15 @@ interface HomeProps {
 
 export default function Home({ initVendors }: HomeProps) {
   return (
+    <>
+    <Head>
+      <title>Vendors</title>
+      <meta name="description" content="serving up food trucks" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
     <Main initVendors={initVendors} />
+    </>
   )
 }
 
