@@ -9,18 +9,18 @@ resource "aws_amplify_app" "amplify_ui" {
         frontend:
         phases:
             preBuild:
-            commands:
-                - yarn install
+              commands:
+                  - yarn install
             build:
-            commands:
-                - yarn run build
+              commands:
+                  - yarn run build
         artifacts:
             baseDirectory: .next
             files:
-            - '**/*'
+              - '**/*'
         cache:
             paths:
-            - node_modules/**/*
+              - node_modules/**/*
     EOT
 
     enable_auto_branch_creation = true
